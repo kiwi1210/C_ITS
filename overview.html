@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title>C-ITS test</title>
+
+    <!-- <link rel="stylesheet" href="http://unpkg.com/leaflet@1.9.3/dist/leaflet.css" /> -->
+    <!-- <script src="http://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script> -->
+    <link rel="stylesheet" href="fontawesome-5.5/css/all.min.css" />
+    <link rel="stylesheet" href="slick/slick.css">
+    <link rel="stylesheet" href="slick/slick-theme.css">
+    <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/tooplate-infinite-loop.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <style type="text/css">
+        #map {
+            height: 100vh;
+            width:100%;
+        }
+
+        #layer-controls {
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            font-family: sans-serif;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+    </style>
+
+</head>
+
+<body>
+
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">              
+        <div class="container">   
+          <div class="tm-next">
+              <a href="#infinite" class="navbar-brand">C-ITS Data Viz</a>
+          </div>             
+            
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars navbar-toggler-icon"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="./index.html" onclick="window.location.href='index.html'; return false;">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="./overview.html" onclick="window.location.href='overview.html'; return false;">Overview</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link tm-nav-link" href="./working_point_animation.html" onclick="window.location.href='working_point_animation.html'; return false;">Animated Map</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="./use_cases.html" onclick="window.location.href='use_cases.html'; return false;">Use Cases</a>
+              </li>                   
+            </ul>
+          </div>        
+        </div>
+      </nav>   
+
+    <div id="map"></div>
+
+    <div id="layer-controls">
+    <label><input type="checkbox" id="toggle-cam" checked> CAM</label><br>
+    <label><input type="checkbox" id="toggle-denm" checked> DENM</label>
+    </div>
+
+
+    <script>
+
+        let map = L.map('map').setView([47.827076, 13.034710], 13);
+
+        // default tile layer
+        // let layer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+        // });
+        // layer.addTo(map);
+
+        // Alter to another layer: CartoDB Positron (light & clean)
+        let layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+            });
+        layer.addTo(map);
+
+
+        // Load CAMS data
+        fetch('data/CAM_paths_1.geojson')
+            .then(res => res.json())
+            .then(data => {
+                const geoLayer = L.geoJSON(data, {
+                    pointToLayer: function (feature, latlng) {
+                        return L.circleMarker(latlng, {
+                            radius: 4,
+                            fillColor: "#3b738f",
+                            color: "#fff",
+                            weight: 0.5,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                    },
+                    onEachFeature: function (feature, layer) {
+                        const date = new Date(feature.properties.timestamp);
+                        const formattedTime = date.toLocaleString();
+                        layer.bindPopup(
+                            `<strong>Station ID:</strong> ${feature.properties.stationID}<br>` +
+                            `<strong>Time:</strong> ${formattedTime}`
+                        );
+                    }
+                }).addTo(map);
+
+                 // add the handler now that denmLayer exists
+                document.getElementById('toggle-cam')
+                        .addEventListener('change', function () {
+                    this.checked ? geoLayer.addTo(map)
+                                : map.removeLayer(geoLayer);
+                });
+
+                // Fit map to bounds
+                // map.fitBounds(geoLayer.getBounds());
+            });
+        
+
+        // Load DENM data
+        fetch('data/DENM_paths_1.geojson')
+            .then((response) => response.json())
+            .then((data) => {
+                const geojsonLayer = L.geoJSON(data, {
+                    onEachFeature: function (feature, layer) {
+                        const props = feature.properties;
+                        const date = new Date(props.timestamp);
+                        const formattedTime = date.toLocaleString();
+                        let popupContent = `<strong>Type:</strong> ${props.type}<br/>`;
+                        popupContent += `<strong>Station ID:</strong> ${props.stationID}<br/>`;
+                        popupContent += `<strong>Time:</strong> ${formattedTime}`;
+                        layer.bindPopup(popupContent);
+                    },
+                    style: function (feature) {
+                        return feature.geometry.type === "LineString"
+                            ? { color: "#de8a5a", weight: 3 }
+                            : {};
+                    },
+                    pointToLayer: function (feature, latlng) {
+                        return L.circleMarker(latlng, {
+                            radius: 6,
+                            fillColor: "#ca562c",
+                            color: "#fff",
+                            weight: 1,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        });
+                    }
+                }).addTo(map);
+
+                 // add the handler now that denmLayer exists
+                document.getElementById('toggle-denm')
+                        .addEventListener('change', function () {
+                    this.checked ? geojsonLayer.addTo(map)
+                                : map.removeLayer(geojsonLayer);
+                });
+
+                // Fit map to GeoJSON bounds
+                // map.fitBounds(geojsonLayer.getBounds());
+            })
+            .catch((err) => console.error('Failed to load GeoJSON:', err));
+
+
+
+
+    </script>
+
+</body>
+
+</html>

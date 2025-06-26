@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>C-ITS Data Viz</title>
+    <link rel="stylesheet" href="fontawesome-5.5/css/all.min.css" />
+    <link rel="stylesheet" href="slick/slick.css">
+    <link rel="stylesheet" href="slick/slick-theme.css">
+    <link rel="stylesheet" href="magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/tooplate-infinite-loop.css" />
+
+<!--
+Tooplate 2117 Infinite Loop
+https://www.tooplate.com/view/2117-infinite-loop
+-->
+
+  </head>
+  <body>    
+    <!-- Hero section -->
+    <section id="infinite" class="text-white tm-font-big tm-parallax">
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-md tm-navbar" id="tmNav">              
+        <div class="container">   
+          <div class="tm-next">
+              <a href="#infinite" class="navbar-brand">C-ITS Data Viz</a>
+          </div>             
+            
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars navbar-toggler-icon"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="#infinite">Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="./overview.html" onclick="window.location.href='overview.html'; return false;">Overview</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link tm-nav-link" href="./working_point_animation.html" onclick="window.location.href='working_point_animation.html'; return false;">Animated Map</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link tm-nav-link" href="./use_cases.html" onclick="window.location.href='use_cases.html'; return false;">Use Cases</a>
+              </li>                  
+            </ul>
+          </div>        
+        </div>
+      </nav>
+      
+      <div class="text-center tm-hero-text-container">
+        <div class="tm-hero-text-container-inner">
+            <h2 class="tm-hero-title">Visualizing C-ITS data from vehicles</h2>
+            <p class="tm-hero-subtitle">
+              See What Vehicles See
+              <br>Unlock the data behind connected mobility with interactive maps and animations that bring C-ITS communication to life.
+            </p>
+        </div>        
+      </div>
+
+      <div class="tm-next tm-intro-next">
+        <a href="#whatwedo" class="text-center tm-down-arrow-link">
+          <i class="fas fa-2x fa-arrow-down tm-down-arrow"></i>
+        </a>
+      </div>      
+    </section>
+
+    <section id="whatwedo" class="tm-section-pad-top">
+      
+      <div class="container">
+
+            <div class="row tm-content-box"><!-- first row -->
+                <div class="col-lg-12 col-xl-12">
+                    <div class="tm-intro-text-container">
+                        <h2 class="tm-text-primary mb-4 tm-section-title">What We Do</h2>
+                        <p class="mb-4 tm-intro-text">
+                          Historic datasets of Cooperative Awareness Messages (CAMs) and Decentralized Environmental Notification Messages (DENMs) collected from vehicles in Salzburg. CAMs consist of periodic messages that provide GPS coordinates along with dynamic vehicle information, while DENMs are event-driven messages that report special traffic events such as stationary vehicles or traffic jams.</p>
+                    </div>
+                </div>
+
+            </div><!-- first row -->
+
+
+            <div class="row tm-content-box"><!-- first row -->
+                <div class="col-lg-12 col-xl-12">
+                    <div class="tm-intro-text-container">
+                        <h2 class="tm-text-primary mb-4 tm-section-title">What We Visualize</h2>
+                        <p class="mb-4 tm-intro-text">
+                          Our project brings C-ITS data to life by visualizing two key message types: CAM data shows real-time vehicle movement and status, while DENM data highlights unexpected events like hazards or accidents. Together, they offer insight into how connected vehicles communicate to improve road safety and efficiency.</p>
+                    </div>
+                </div>
+
+            </div><!-- first row -->
+            
+            <div class="row tm-content-box"><!-- third row -->
+        		<div class="col-lg-1">
+                    <i class="fas fa-3x fa-satellite text-center tm-icon"></i>
+                </div>
+                <div class="col-lg-5">
+                    <div class="tm-intro-text-container">
+                        <h2 class="tm-text-primary mb-4">CAM</h2>
+                        <p class="mb-4 tm-intro-text">
+                      CAMs (Cooperative Awareness Messages) are broadcasted regularly by vehicles to share real-time data such as position, speed, heading, and status. These messages help nearby vehicles and infrastructure stay aware of each other, enabling smoother traffic flow and collision avoidance.</p>
+                          
+                          <div class="tm-continue">
+                            <a href="./vehicle_positions_map2.html" class="tm-intro-text tm-btn-primary" onclick="window.location.href='vehicle_positions_map2.html'; return false;">Explore CAMs</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-1">
+                    <i class="fas fa-3x fa-triangle-exclamation text-center tm-icon"></i>
+                </div>
+                <div class="col-lg-5">
+                    <div class="tm-intro-text-container">
+                      <h2 class="tm-text-primary mb-4">DENM</h2>
+                        <p class="mb-4 tm-intro-text">
+                      DENM (Decentralized Environmental Notification Messages)are event-driven messages sent by vehicles when unexpected situations occur—like accidents, obstacles, or hazardous weather. They alert other road users in the area, improving safety and enabling quicker reactions to sudden dangers.</p>
+                          
+                          <div class="tm-continue">
+                            <a href="./overview.html" class="tm-intro-text tm-btn-primary" onclick="window.location.href='overview.html'; return false;">Overview</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- third row -->
+
+            <div class="row tm-content-box"><!-- fourth row -->
+                <div class="col-lg-12 col-xl-12">
+                    <div class="tm-intro-text-container">
+                        <h2 class="tm-text-primary mb-4 tm-section-title">Methodology & Workflow</h2>
+                        <h3 class="tm-text-primary tm-intro-text">Data Preprocessing</h3>
+                        <p class="mb-4 tm-intro-text">
+                          We started by cleaning and parsing the C-ITS datasets, focusing on the CAM and DENM messages—both of which are nested JSON structures with key metadata spread across multiple levels. The goal was to extract only the fields needed for spatial-temporal analysis and visualization. We handled inconsistent or incomplete messages with robust error checks and filtered out irrelevant or redundant fields, such as status flags or confidence indicators that did not add value. Spatial data (latitude, longitude, altitude) was standardized to WGS84 using scaling factors, ensuring compatibility with GIS tools. From CAM messages, we extracted spatial coordinates, timestamps (in UNIX epoch milliseconds), and vehicle dynamics (speed, heading, acceleration, curvature, steering angle). From DENM messages, we pulled out event types, positions, validity periods, traffic relevance, and unique vehicle/station identifiers for grouping and analysis. The cleaned data was stored in a single Pandas DataFrame, where each row represents one message. The DataFrame schema is as follows:</p>
+                    </div>
+                </div>
+            <!-- </div>
+
+            <div class="row tm-content-box"> -->
+            <h4 class="tm-text-primary tm-intro-text">CAM Metadata Fields</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column Name</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>latitude_deg</td>
+                            <td>Latitude of the vehicle in decimal degrees (WGS84)</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>longitude_deg</td>
+                            <td>Longitude of the vehicle in decimal degrees (WGS84)</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>altitude_m</td>
+                            <td>Altitude of the vehicle above mean sea level, in meters</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>heading_deg</td>
+                            <td>Vehicle heading angle relative to true north, in degrees</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>speed_mps</td>
+                            <td>Vehicle speed in meters per second</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>speed_confidence</td>
+                            <td>Confidence level of the speed measurement</td>
+                            <td>float or int</td>
+                        </tr>
+                        <tr>
+                            <td>lateral_acceleration_mps2</td>
+                            <td>Lateral (sideways) acceleration of the vehicle, in m/s²</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>longitudinal_acceleration_mps2</td>
+                            <td>Longitudinal (forward/backward) acceleration, in m/s²</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>yaw_rate_deg_per_s</td>
+                            <td>Rate of change of yaw angle, degrees per second</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>vehicle_length_m</td>
+                            <td>Vehicle length in meters</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>vehicle_width_m</td>
+                            <td>Vehicle width in meters</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>drive_direction</td>
+                            <td>Drive direction indicator (e.g., forward, reverse)</td>
+                            <td>int or categorical</td>
+                        </tr>
+                        <tr>
+                            <td>station_id</td>
+                            <td>Unique identifier for the transmitting station or vehicle</td>
+                            <td>string/int</td>
+                        </tr>
+                        <tr>
+                            <td>station_type</td>
+                            <td>Type/class of station or vehicle (e.g., passenger car, truck)</td>
+                            <td>string/int</td>
+                        </tr>
+                        <tr>
+                            <td>timestamp_ms</td>
+                            <td>Message timestamp in UNIX epoch milliseconds</td>
+                            <td>int</td>
+                        </tr>
+                        <tr>
+                            <td>path_history_length</td>
+                            <td>Number of previous positions recorded in the path history</td>
+                            <td>int</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4 class="tm-text-primary tm-intro-text" style="margin-top:20px;">DENM Metadata Fields</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column Name</th>
+                            <th>Description</th>
+                            <th>Data Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>station_id</td>
+                            <td>Unique identifier of the originating station or vehicle</td>
+                            <td>string/int</td>
+                        </tr>
+                        <tr>
+                            <td>sequence_number</td>
+                            <td>Sequence number identifying message order or version</td>
+                            <td>int</td>
+                        </tr>
+                        <tr>
+                            <td>timestamp_ms</td>
+                            <td>Detection time of the event in UNIX epoch milliseconds</td>
+                            <td>int</td>
+                        </tr>
+                        <tr>
+                            <td>reference_time_ms</td>
+                            <td>Reference time related to the event, in UNIX epoch milliseconds</td>
+                            <td>int</td>
+                        </tr>
+                        <tr>
+                            <td>latitude_deg</td>
+                            <td>Latitude of the event location in decimal degrees</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>longitude_deg</td>
+                            <td>Longitude of the event location in decimal degrees</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>altitude_m</td>
+                            <td>Altitude of the event location above mean sea level, in meters</td>
+                            <td>float</td>
+                        </tr>
+                        <tr>
+                            <td>relevance_traffic_direction</td>
+                            <td>Traffic direction relevance of the event (e.g., same direction, all directions)</td>
+                            <td>int or categorical</td>
+                        </tr>
+                        <tr>
+                            <td>station_type</td>
+                            <td>Type or class of station or vehicle originating the message</td>
+                            <td>string/int</td>
+                        </tr>
+                        <tr>
+                            <td>cause_code</td>
+                            <td>Numeric code indicating the cause or type of reported event</td>
+                            <td>int</td>
+                        </tr>
+                        <tr>
+                            <td>sub_cause_code</td>
+                            <td>Additional detail on the cause type</td>
+                            <td>int</td>
+                        </tr>
+                        <tr>
+                            <td>information_quality</td>
+                            <td>Quality indicator of the event information</td>
+                            <td>int or categorical</td>
+                        </tr>
+                        <tr>
+                            <td>trace_count</td>
+                            <td>Number of traces (paths) associated with the event</td>
+                            <td>int</td>
+                        </tr>
+                        <tr>
+                            <td>total_trace_points</td>
+                            <td>Total number of trace points across all traces</td>
+                            <td>int</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <h3 class="tm-text-primary tm-intro-text" style="margin-top:20px">Study Area & Data Collection Zones</h3>
+                <p class="mb-4 tm-intro-text">
+                  The CAM and DENM messages were collected from vehicles operating across various regions in and around <strong>Salzburg, Austria</strong>. The figure below shows a side-by-side comparison of CAM (left) and DENM (right) message distributions, overlaid on a satellite map. Each red polygon highlights an area where C-ITS messages were recorded. Purple markers represent individual messages (or clusters thereof), indicating both high-traffic urban centers and more remote, alpine transit corridors. CAMs (left map) show continuous, dense coverage, especially along major roadways, reflecting the periodic nature of these messages. DENMs (right map) appear more sparsely and are concentrated in areas where specific traffic events occurred, such as hazards. These spatial patterns illustrate the complementary nature of CAM and DENM data—while CAMs offer high-frequency motion tracking, DENMs capture rare but important incident-based information.</p>
+                    
+
+                <div class="figure-center" style="text-align: center;">
+                    <img src="to_show/report/map_init.png" width="800" >
+                </div>
+
+                <div>
+                <h3 class="tm-text-primary tm-intro-text" style="margin-top:20px">Statistical Chart</h3>
+                <p class="mb-4 tm-intro-text">
+                  The following interactive bar chart summarizes the number of CAM and DENM messages recorded per city. CAM messages, which are sent periodically by vehicles, dominate the total volume. In contrast, DENM messages are event-triggered and occur less frequently, appearing primarily in cities with more complex traffic situations. This distribution provides insight into both baseline traffic flow (via CAMs) and abnormal events (via DENMs).</p>
+                
+                <iframe 
+                    src="to_show/report/city_stats.html" 
+                    width="100%" 
+                    height="600" 
+                    frameborder="0">
+                </iframe>
+                </div>
+
+            </div><!-- fifth row -->
+
+        </div>
+      
+    </section>
+    
+    
+    <!-- Contact -->
+    <section id="contact" class="tm-section-pad-top tm-parallax-2">
+        
+      </div>
+
+      	<footer class="text-center small tm-footer">
+          <p>Created by Bea, Betty, Lesly and Yi-Ru for Location-Based Services Project</p>
+          <p class="mb-0">
+          Copyright &copy; 2025 LBS Group 8        
+          . <a rel="nofollow" href="https://www.tooplate.com" title="HTML templates">Designed by TOOPLATE</a></p>
+        </footer>
+
+    </section>
+    
+    <script src="js/jquery-1.9.1.min.js"></script>     
+    <script src="slick/slick.min.js"></script>
+    <script src="magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="js/easing.min.js"></script>
+    <script src="js/jquery.singlePageNav.min.js"></script>     
+    <script src="js/bootstrap.min.js"></script> 
+    <script>
+
+      function getOffSet(){
+        var _offset = 450;
+        var windowHeight = window.innerHeight;
+
+        if(windowHeight > 500) {
+          _offset = 400;
+        } 
+        if(windowHeight > 680) {
+          _offset = 300
+        }
+        if(windowHeight > 830) {
+          _offset = 210;
+        }
+
+        return _offset;
+      }
+
+      function setParallaxPosition($doc, multiplier, $object){
+        var offset = getOffSet();
+        var from_top = $doc.scrollTop(),
+          bg_css = 'center ' +(multiplier * from_top - offset) + 'px';
+        $object.css({"background-position" : bg_css });
+      }
+
+      // Parallax function
+      // Adapted based on https://codepen.io/roborich/pen/wpAsm        
+      var background_image_parallax = function($object, multiplier, forceSet){
+        multiplier = typeof multiplier !== 'undefined' ? multiplier : 0.5;
+        multiplier = 1 - multiplier;
+        var $doc = $(document);
+        // $object.css({"background-attatchment" : "fixed"});
+
+        if(forceSet) {
+          setParallaxPosition($doc, multiplier, $object);
+        } else {
+          $(window).scroll(function(){          
+            setParallaxPosition($doc, multiplier, $object);
+          });
+        }
+      };
+
+      var background_image_parallax_2 = function($object, multiplier){
+        multiplier = typeof multiplier !== 'undefined' ? multiplier : 0.5;
+        multiplier = 1 - multiplier;
+        var $doc = $(document);
+        $object.css({"background-attachment" : "fixed"});
+        
+        $(window).scroll(function(){
+          if($(window).width() > 768) {
+            var firstTop = $object.offset().top,
+                pos = $(window).scrollTop(),
+                yPos = Math.round((multiplier * (firstTop - pos)) - 186);              
+
+            var bg_css = 'center ' + yPos + 'px';
+
+            $object.css({"background-position" : bg_css });
+          } else {
+            $object.css({"background-position" : "center" });
+          }
+        });
+      };
+      
+      $(function(){
+        // Hero Section - Background Parallax
+        background_image_parallax($(".tm-parallax"), 0.30, false);
+        background_image_parallax_2($("#contact"), 0.80);   
+        background_image_parallax_2($("#testimonials"), 0.80);   
+        
+        // Handle window resize
+        window.addEventListener('resize', function(){
+          background_image_parallax($(".tm-parallax"), 0.30, true);
+        }, true);
+
+        // Detect window scroll and update navbar
+        $(window).scroll(function(e){          
+          if($(document).scrollTop() > 120) {
+            $('.tm-navbar').addClass("scroll");
+          } else {
+            $('.tm-navbar').removeClass("scroll");
+          }
+        });
+        
+        // Close mobile menu after click 
+        $('#tmNav a').on('click', function(){
+          $('.navbar-collapse').removeClass('show'); 
+        })
+
+        // Scroll to corresponding section with animation
+        $('#tmNav').singlePageNav({
+          'easing': 'easeInOutExpo',
+          'speed': 600
+        });        
+        
+        // Add smooth scrolling to all links
+        // https://www.w3schools.com/howto/howto_css_smooth_scroll.asp
+        $("a").on('click', function(event) {
+          if (this.hash !== "") {
+            event.preventDefault();
+            var hash = this.hash;
+
+            $('html, body').animate({
+              scrollTop: $(hash).offset().top
+            }, 600, 'easeInOutExpo', function(){
+              window.location.hash = hash;
+            });
+          } // End if
+          if ($(this).attr('href').indexOf('.html') !== -1) {
+              return true; // Allow normal navigation
+          }
+        });
+
+
+        document.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', function(event) {
+            if (!link.classList.contains('allow-default')) {
+              event.preventDefault();
+              // your custom code
+            }
+          });
+        });
+
+
+        // Pop up
+        $('.tm-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          gallery: { enabled: true }
+        });
+
+        $('.tm-testimonials-carousel').slick({
+          dots: true,
+          prevArrow: false,
+          nextArrow: false,
+          infinite: false,
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          responsive: [
+            {
+              breakpoint: 992,
+              settings: {
+                slidesToShow: 2
+              }
+            },
+            {
+              breakpoint: 768,
+              settings: {
+                slidesToShow: 2
+              }
+            }, 
+            {
+              breakpoint: 480,
+              settings: {
+                  slidesToShow: 1
+              }                 
+            }
+          ]
+        });
+
+        // Gallery
+        $('.tm-gallery').slick({
+          dots: true,
+          infinite: false,
+          slidesToShow: 5,
+          slidesToScroll: 2,
+          responsive: [
+          {
+            breakpoint: 1199,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2
+            }
+          },
+          {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+        });
+      });
+    </script>
+  </body>
+</html>

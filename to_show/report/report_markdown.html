@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizing C-ITS Data from Vehicles — Group Project Report</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.6;
+            color: #333;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 45px;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            line-height: 1.25;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: .3em;
+        }
+        h1 { font-size: 2em; }
+        h2 { font-size: 1.5em; }
+        h3 { font-size: 1.25em; }
+        h4 { font-size: 1em; }
+        p {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            width: 100%;
+            display: block;
+            overflow: auto;
+        }
+        thead {
+            background-color: #f6f8fa;
+        }
+        th, td {
+            padding: 10px 15px;
+            border: 1px solid #dfe2e5;
+            text-align: left;
+        }
+        tr:nth-child(even) {
+            background-color: #f6f8fa;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .figure-center {
+            text-align: center;
+            margin: 20px 0;
+        }
+        iframe {
+            border: 1px solid #dfe2e5;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Visualizing C-ITS Data from Vehicles — Group Project Report</h1>
+
+    <h2>Project Overview</h2>
+    <p>Historic datasets of Cooperative Awareness Messages (CAMs) and Decentralized Environmental Notification Messages (DENMs) collected from vehicles in Salzburg. CAMs consist of periodic messages that provide GPS coordinates along with dynamic vehicle information, while DENMs are event-driven messages that report special traffic events such as stationary vehicles or traffic jams.</p>
+
+    <h2>Methodology & Workflow</h2>
+
+    <h3>Data Preprocessing</h3>
+    <p>We started by cleaning and parsing the C-ITS datasets, focusing on the CAM and DENM messages—both of which are nested JSON structures with key metadata spread across multiple levels. The goal was to extract only the fields needed for spatial-temporal analysis and visualization. We handled inconsistent or incomplete messages with robust error checks and filtered out irrelevant or redundant fields, such as status flags or confidence indicators that did not add value. Spatial data (latitude, longitude, altitude) was standardized to WGS84 using scaling factors, ensuring compatibility with GIS tools. From CAM messages, we extracted spatial coordinates, timestamps (in UNIX epoch milliseconds), and vehicle dynamics (speed, heading, acceleration, curvature, steering angle). From DENM messages, we pulled out event types, positions, validity periods, traffic relevance, and unique vehicle/station identifiers for grouping and analysis. The cleaned data was stored in a single Pandas DataFrame, where each row represents one message. The DataFrame schema is as follows:</p>
+
+    <h4>CAM Metadata Fields</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Column Name</th>
+                <th>Description</th>
+                <th>Data Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>latitude_deg</td>
+                <td>Latitude of the vehicle in decimal degrees (WGS84)</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>longitude_deg</td>
+                <td>Longitude of the vehicle in decimal degrees (WGS84)</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>altitude_m</td>
+                <td>Altitude of the vehicle above mean sea level, in meters</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>heading_deg</td>
+                <td>Vehicle heading angle relative to true north, in degrees</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>speed_mps</td>
+                <td>Vehicle speed in meters per second</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>speed_confidence</td>
+                <td>Confidence level of the speed measurement</td>
+                <td>float or int</td>
+            </tr>
+            <tr>
+                <td>lateral_acceleration_mps2</td>
+                <td>Lateral (sideways) acceleration of the vehicle, in m/s²</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>longitudinal_acceleration_mps2</td>
+                <td>Longitudinal (forward/backward) acceleration, in m/s²</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>yaw_rate_deg_per_s</td>
+                <td>Rate of change of yaw angle, degrees per second</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>vehicle_length_m</td>
+                <td>Vehicle length in meters</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>vehicle_width_m</td>
+                <td>Vehicle width in meters</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>drive_direction</td>
+                <td>Drive direction indicator (e.g., forward, reverse)</td>
+                <td>int or categorical</td>
+            </tr>
+            <tr>
+                <td>station_id</td>
+                <td>Unique identifier for the transmitting station or vehicle</td>
+                <td>string/int</td>
+            </tr>
+            <tr>
+                <td>station_type</td>
+                <td>Type/class of station or vehicle (e.g., passenger car, truck)</td>
+                <td>string/int</td>
+            </tr>
+            <tr>
+                <td>timestamp_ms</td>
+                <td>Message timestamp in UNIX epoch milliseconds</td>
+                <td>int</td>
+            </tr>
+            <tr>
+                <td>path_history_length</td>
+                <td>Number of previous positions recorded in the path history</td>
+                <td>int</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4>DENM Metadata Fields</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Column Name</th>
+                <th>Description</th>
+                <th>Data Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>station_id</td>
+                <td>Unique identifier of the originating station or vehicle</td>
+                <td>string/int</td>
+            </tr>
+            <tr>
+                <td>sequence_number</td>
+                <td>Sequence number identifying message order or version</td>
+                <td>int</td>
+            </tr>
+            <tr>
+                <td>timestamp_ms</td>
+                <td>Detection time of the event in UNIX epoch milliseconds</td>
+                <td>int</td>
+            </tr>
+            <tr>
+                <td>reference_time_ms</td>
+                <td>Reference time related to the event, in UNIX epoch milliseconds</td>
+                <td>int</td>
+            </tr>
+            <tr>
+                <td>latitude_deg</td>
+                <td>Latitude of the event location in decimal degrees</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>longitude_deg</td>
+                <td>Longitude of the event location in decimal degrees</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>altitude_m</td>
+                <td>Altitude of the event location above mean sea level, in meters</td>
+                <td>float</td>
+            </tr>
+            <tr>
+                <td>relevance_traffic_direction</td>
+                <td>Traffic direction relevance of the event (e.g., same direction, all directions)</td>
+                <td>int or categorical</td>
+            </tr>
+            <tr>
+                <td>station_type</td>
+                <td>Type or class of station or vehicle originating the message</td>
+                <td>string/int</td>
+            </tr>
+            <tr>
+                <td>cause_code</td>
+                <td>Numeric code indicating the cause or type of reported event</td>
+                <td>int</td>
+            </tr>
+            <tr>
+                <td>sub_cause_code</td>
+                <td>Additional detail on the cause type</td>
+                <td>int</td>
+            </tr>
+            <tr>
+                <td>information_quality</td>
+                <td>Quality indicator of the event information</td>
+                <td>int or categorical</td>
+            </tr>
+            <tr>
+                <td>trace_count</td>
+                <td>Number of traces (paths) associated with the event</td>
+                <td>int</td>
+            </tr>
+            <tr>
+                <td>total_trace_points</td>
+                <td>Total number of trace points across all traces</td>
+                <td>int</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Study Area & Data Collection Zones</h3>
+    <p>The CAM and DENM messages were collected from vehicles operating across various regions in and around Salzburg, Austria. The figure below shows a side-by-side comparison of CAM (left) and DENM (right) message distributions, overlaid on a satellite map. Each red polygon highlights an area where C-ITS messages were recorded. Purple markers represent individual messages (or clusters thereof), indicating both high-traffic urban centers and more remote, alpine transit corridors. CAMs (left map) show continuous, dense coverage, especially along major roadways, reflecting the periodic nature of these messages. DENMs (right map) appear more sparsely and are concentrated in areas where specific traffic events occurred, such as hazards. These spatial patterns illustrate the complementary nature of CAM and DENM data—while CAMs offer high-frequency motion tracking, DENMs capture rare but important incident-based information.</p>
+
+    <div class="figure-center">
+        <img src="map_init.png" width="800">
+    </div>
+
+    <h3>Simple stats</h3>
+    <p>The following interactive bar chart summarizes the number of CAM and DENM messages recorded per city. CAM messages, which are sent periodically by vehicles, dominate the total volume. In contrast, DENM messages are event-triggered and occur less frequently, appearing primarily in cities with more complex traffic situations. This distribution provides insight into both baseline traffic flow (via CAMs) and abnormal events (via DENMs).</p>
+
+    <iframe 
+        src="city_stats.html" 
+        width="100%" 
+        height="600" 
+        frameborder="0">
+    </iframe>
+</body>
+</html>

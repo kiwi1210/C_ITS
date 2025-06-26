@@ -99,7 +99,7 @@
 
 
         // Load CAMS data
-        fetch('data/CAM_paths_1.geojson')
+        fetch('./data/CAM_paths_1.geojson')
             .then(res => res.json())
             .then(data => {
                 const geoLayer = L.geoJSON(data, {
@@ -115,10 +115,15 @@
                     },
                     onEachFeature: function (feature, layer) {
                         const date = new Date(feature.properties.timestamp);
-                        const formattedTime = date.toLocaleString();
+                        const formattedTime = date.toLocaleString('en-GB');
+                        let speed = "N/A";
+                        if (feature.properties.speed && feature.properties.speed.speedValue !== undefined) {
+                            speed = ((feature.properties.speed.speedValue / 100) * 3.6).toFixed(1) + " km/h"; // ETSI speedValue is in 0.01 m/s
+                        }
                         layer.bindPopup(
                             `<strong>Station ID:</strong> ${feature.properties.stationID}<br>` +
-                            `<strong>Time:</strong> ${formattedTime}`
+                            `<strong>Time:</strong> ${formattedTime}<br>` +
+                            `<strong>Speed:</strong> ${speed}`
                         );
                     }
                 }).addTo(map);
@@ -133,20 +138,48 @@
                 // Fit map to bounds
                 // map.fitBounds(geoLayer.getBounds());
             });
-        
+
+        const causeCodeMap = {
+            0: "Undefined",
+            1: "Accident",
+            2: "Hazardous location - surface",
+            3: "Hazardous location - obstacle",
+            4: "Hazardous location - human",
+            5: "Wrong way driving",
+            6: "Stationary vehicle",
+            7: "Emergency vehicle approaching",
+            8: "Adverse weather condition",
+            9: "Temporary slippery road",
+            10: "Animal on the road",
+            11: "Road works",
+            12: "Rescue and recovery work",
+            13: "Slow or stationary traffic",
+            14: "Dangerous end of queue",
+            15: "Vehicle breakdown",
+            16: "Post crash",
+            17: "Human presence on the road",
+            18: "Other dangerous situation",
+            19: "Wrong way hazard warning",
+            20: "Road closed",
+            21: "Traffic condition warning"
+        };
+                    
 
         // Load DENM data
-        fetch('data/DENM_paths_1.geojson')
+        fetch('./data/DENM_paths_1.geojson')
             .then((response) => response.json())
             .then((data) => {
                 const geojsonLayer = L.geoJSON(data, {
                     onEachFeature: function (feature, layer) {
                         const props = feature.properties;
                         const date = new Date(props.timestamp);
-                        const formattedTime = date.toLocaleString();
+                        const formattedTime = date.toLocaleString('en-GB');
+                        // const mainCause = props.mainCause;
+                        const mainCause = causeCodeMap[props.mainCause] || "Unknown";
                         let popupContent = `<strong>Type:</strong> ${props.type}<br/>`;
                         popupContent += `<strong>Station ID:</strong> ${props.stationID}<br/>`;
-                        popupContent += `<strong>Time:</strong> ${formattedTime}`;
+                        popupContent += `<strong>Time:</strong> ${formattedTime}<br/>`;
+                        popupContent += `<strong>Main Cause:</strong> ${mainCause}`;
                         layer.bindPopup(popupContent);
                     },
                     style: function (feature) {
